@@ -30,4 +30,5 @@ class TranscriptionJob:
             print("Not ready yet...")
             time.sleep(10)
         print(status)
-        return status
+        new_link = pd.read_json(status['TranscriptionJob']['Transcript']['TranscriptFileUri'])
+        return new_link
