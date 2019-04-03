@@ -1,5 +1,7 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+import numpy as np
+from sklearn.metrics import jaccard_similarity_score
+from scipy.spatial.distance import pdist, squareform
 
 
 class Model_Analysis:
@@ -13,7 +15,7 @@ class Model_Analysis:
 
 
     def fit_TFIDF(self):
-        vectorizer = TfidfVectorizer(stop_words = 'english')
+        vectorizer = TfidfVectorizer(stop_words = 'english',ngram_range = (1,2), min_df = .01, max_df = .9, binary = True)
         response = vectorizer.fit_transform(self.summary)
         tfidf = response.toarray().sum(axis=0)
         feature_names = vectorizer.get_feature_names()
@@ -34,3 +36,8 @@ class Model_Analysis:
             tf_sentence.append([self.sentence_tc[idx][0],self.sentence_tc[idx][1],sentences[1],(sentence_count/(count+1))])
 
         return tf_sentence
+
+    def test(self):
+        vect = CountVectorizer(ngram_range = (1,2), min_df = .01, max_df = .9, binary = True)
+        new_vect = vect.fit_transform(self.summary).toarray()
+        squareform(pdist(new_vect, metric='jaccard')).shape
