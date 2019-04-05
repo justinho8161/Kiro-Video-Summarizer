@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+
+{% block body %}
+
+<video width="320" height="240" controls>
+
+  <source src="/static/{{ name }}" type="video/mp4"></source>
+</video>
+
+{% endblock %}
