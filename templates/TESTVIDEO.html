@@ -2,10 +2,10 @@
 
 
 {% block body %}
-    <form class="" action="/vid" method="post">
-      <input type="text" name="name" value="">
+  {% for thumbnail in thumbnails %}
+    <a name="name" href={{ url_for('vid' ,vid_name=thumbnail )}}>
+      <img src="../static/imgs/{{thumbnail}}.jpeg" style="width:300px;height:300px">
+    </a>
 
-    </form>
-      <input type="submit" name="" value="Register">
-
+  {% endfor %}
 {% endblock %}

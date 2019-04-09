@@ -9,46 +9,43 @@ import pandas as pd
 from __future__ import unicode_literals
 import youtube_dl
 from youtube_dl import YoutubeDL
+import pygame
 
 
-# ydl_opts = {'outtmpl': '%(title)s.%(ext)s'}
-# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-# ydl.download(['https://www.youtube.com/watch?v=BaW_jenozKc'])
-#     video_title = info_dict.get('title', None)
-link = 'https://www.youtube.com/watch?v=ojvqIumZtnU'
-
-# with YoutubeDL(ydl_opts) as ydl:
-#     # ydl.download([])
-#     info = ydl.extract_info(video, download=True)
-#     title = ydl.prepare_filename(info)
-
-ydl_opts = {'outtmpl': '%(id)s.%(ext)s', 'format':'mp4'}
-# link =  "http://www.youtube.com/watch?v=BaW_jenozKc"
-# ydl_opts = {'outtmpl' : ''}
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    info = ydl.extract_info(link, download=True)
-    title = ydl.prepare_filename(info)
+link = 'https://www.youtube.com/watch?v=3BRLGRqj8ps'
+new_link = main(link)
+new_link
+video = VideoFileClip('test0403.mp4')
+video.show(t=5, interactive = True)
 
 
-status = output_job(title, output_name=title[:-4], bucket_name = 'hos123')
-status
-
-df = cleaning_modeling(status)
-df
-summarized_video(df,title)
-main(video)
 
 
-def main(video, output_name='test', bucket_name = 'hos123'):
-    ydl_opts = {'outtmpl': '%(id)s.%(ext)s'}
+def summarized_video(new_df, video_name, output_name):
+    video = VideoFileClip(video_name)
+    cuts = [video.subclip(float(i[0]),float(i[1])) for i in new_df.TimeCodes.values]
+    concat_clips = concatenate_videoclips(cuts)
+    # .write_videofile(output_name + ' Summarized.mp4', codec = 'mpeg4')
+    return concat_clips
+
+concat_clips = summarized_video(new_link,'vw2SaHkGfss.mp4',"")
+
+k = [frame[:,:,0] for frame in concat_clips.iter_frames()]
+print(k.shape)
+
+type(concat_clips)
+
+def main(video, bucket_name = 'hos123'):
+    ydl_opts = {'outtmpl': '%(id)s.%(ext)s', 'format':'mp4'}
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(video, download=True)
         title = ydl.prepare_filename(info)
+        video_title = info.get('title', None)
 
-
-    status = output_job(title, output_name='test', bucket_name = 'hos123')
+    status = output_job(title, output_name=title[:-4], bucket_name = 'hos123')
     df = cleaning_modeling(status)
-    summarized_video(df)
+    summarized_video(df,title,video_title)
+    return df
 
 
 def output_job(video_name, output_name, bucket_name = 'hos123'):
@@ -75,7 +72,7 @@ def cleaning_modeling(status):
 def summarized_video(new_df, video_name, output_name):
     video = VideoFileClip(video_name)
     cuts = [video.subclip(float(i[0]),float(i[1])) for i in new_df.TimeCodes.values]
-    concatenate_videoclips(cuts).write_videofile(output_name + '.mp4', codec = 'mpeg4')
+    concatenate_videoclips(cuts).write_videofile(output_name + ' Summarized.mp4', codec = 'mpeg4')
 
 
 #One big problem was that tf idf of the whole speech didn't work at all because stories were linear. All speeches have a linear progression leading up to the conclusion, so we had to figure out a way to

@@ -1,11 +1,14 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <video poster="../static/imgs/{{vid_name}}.jpeg" controls="controls">
+      <source src="../static/videos/{{vid_name}}.mp4" type="video/mp4"  />
+    </video>
 
 
-{% block body %}
-
-<video width="320" height="240" controls>
-
-  <source src="/static/{{ name }}" type="video/mp4"></source>
-</video>
-
-{% endblock %}
+  </body>
+</html>
