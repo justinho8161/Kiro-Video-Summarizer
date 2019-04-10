@@ -1,6 +1,8 @@
 import boto3
 import time
 import pandas as pd
+import os
+
 
 class TranscriptionJob:
     def __init__(self, filename):

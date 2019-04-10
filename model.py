@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import numpy as np
 from sklearn.metrics import jaccard_similarity_score
 from scipy.spatial.distance import pdist, squareform
-
+import pandas as pd
 
 class Model_Analysis:
     def __init__(self,transcript):
@@ -11,8 +11,10 @@ class Model_Analysis:
         self.transcript = transcript.transcript
         self.sentence_tc = transcript.sentence_tc
         self.summary, self.tc_and_clean = transcript.summary, transcript.tc_and_clean
-        self.tfidf_per_word = None
 
+        self.tfidf_per_word = None
+        self.tf_sentence = None
+        self.df = None
 
     def fit_TFIDF(self):
         vectorizer = TfidfVectorizer(stop_words = 'english',ngram_range = (1,2), min_df = .01, max_df = .9, binary = True)
@@ -24,7 +26,7 @@ class Model_Analysis:
         for i, word in enumerate(feature_names):
             self.tfidf_per_word[word] = tfidf[i]
 
-        tf_sentence = []
+        self.tf_sentence = []
         for idx, sentences in enumerate(self.tc_and_clean):
             count = 0
             sentence_count = 0
@@ -33,9 +35,17 @@ class Model_Analysis:
                     count+=1
                     sentence_count += self.tfidf_per_word[words.lower()]
 
-            tf_sentence.append([self.sentence_tc[idx][0],self.sentence_tc[idx][1],sentences[1],(sentence_count/(count+1))])
+            self.tf_sentence.append([self.sentence_tc[idx][0][0],self.sentence_tc[idx][0][1],
+                                    float(self.sentence_tc[idx][0][1])-float(self.sentence_tc[idx][0][0]),
+                                    self.sentence_tc[idx][1],sentences[1],(sentence_count/(count+1))])
 
-        return tf_sentence
+        return self
+
+    def construct_df(self):
+
+        df = pd.DataFrame(self.tf_sentence, columns = ['TimeIn','TimeOut','Duration','Sentence','Cleaned_Sentence', 'TFIDF'])
+        self.df = df[(df['TFIDF']>df['TFIDF'].mean()) & ((df['Cleaned_Sentence'].str.count(' ')+1)>3)]
+        return self.df
 
     def test(self):
         vect = CountVectorizer(ngram_range = (1,2), min_df = .01, max_df = .9, binary = True)

@@ -5,6 +5,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk import word_tokenize
 import string
+import nltk
 
 class TranscriptCleaning:
     def __init__(self, status):
