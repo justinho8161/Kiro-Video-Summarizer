@@ -1,30 +1,41 @@
-from editing import *
-from moviepy.editor import *
-from moviepy.video.compositing import *
-from moviepy.video.fx.all import *
-from moviepy.audio.fx.all import *
-
-link = 'https://www.youtube.com/watch?v=QXBDOSJPGbo'
-model = Editor(link, bucket_name='hos123')
+import sqlite3
+conn = sqlite3.connect('example.db')
 
 
-model.start_yt_job()
-status = model.output_job()
-model.cleaning_modeling(status)
+
+link = 'https://www.youtube.com/watch?v=chVOJ7AzIMg'
+model = Editor(link, bucket_name='hos123', run = True)
+
+pd.set_option('display.max_rows', 500)
 test = model.df
-test
+model.df.to_csv
+test = test[test['Duration']>2].reset_index()
 
 
+test1 = test['index'].values
+test1
 
-
-os.chdir('/home/justin/Downloads/Capstone/static/videos')
-video = VideoFileClip(model.title)
-cuts = [video.subclip(float(i),float(j)) for i,j in zip(test.TimeIn.values, test.TimeOut.values)]
-
-# cuts = [video.subclip(float(i[0]),float(i[1])) for i in model.df.TimeCodes.values]
-concatenate_videoclips(cuts).write_videofile(model.title[0:-4]+'s.mp4', codec = 'mpeg4')
-concatenate_videoclips(cuts).save_frame(model.title[0:-4]+'s.jpeg', t=1.5)
-
-
-
-model.summarized_video()
+for i,j in enumerate(test['index'].values):
+    previousIndex = j-1
+    beginTC = test[test['index'] == j]['TimeIn'].values
+    endTC = test[test['index'] == j]['TimeOut'].values
+    if test['index'].values[i-1] == previousIndex:
+        print(endTC)
+# def summarized_video(new_df, video_name, output_name):
+#     video = VideoFileClip(video_name)
+#     cuts = [video.subclip(float(i[0]),float(i[1])) for i in new_df.TimeCodes.values]
+#     concat_clips = concatenate_videoclips(cuts)
+#     # .write_videofile(output_name + ' Summarized.mp4', codec = 'mpeg4')
+#     return concat_clips
+#
+# concat_clips = summarized_video(new_link,'vw2SaHkGfss.mp4',"")
+#
+# k = [frame[:,:,0] for frame in concat_clips.iter_frames()]
+# print(k.shape)
+#
+# type(concat_clips)
+# link = 'https://www.youtube.com/watch?v=nGeKSiCQkPw'
+# new_link, title, video_title = main(link)
+# new_link
+# title
+# video_title

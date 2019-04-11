@@ -22,12 +22,13 @@ class TranscriptionJob:
             MediaFormat= media_format,
             LanguageCode='en-US'
         )
+        num = 0
         while True:
             status = transcribe.get_transcription_job(TranscriptionJobName=job_name)
             if status['TranscriptionJob']['TranscriptionJobStatus'] in ['COMPLETED', 'FAILED']:
                 break
-            print("Not ready yet...")
+            print("Transcribing for {} seconds.".format(num))
             time.sleep(10)
-        print(status)
+            num+=10
         new_link = pd.read_json(status['TranscriptionJob']['Transcript']['TranscriptFileUri'])
         return new_link

@@ -1,19 +1,28 @@
 from flask import Flask, render_template, request
 from string import Template
 import os
+from editing import *
+
 app = Flask(__name__)
-
-
-thumbnails = os.listdir('static/imgs')
-thumbnails = [file[0:-5] for file in sorted(thumbnails)]
 
 @app.route('/')
 def homepage():
-    return render_template('TESTVIDEO.html', thumbnails = thumbnails)
+    thumbnails = os.listdir('static/videos')
+    mp4s = [i for i in thumbnails  if i[-4::] == ".mp4"]
+    jpegs = [i for i in thumbnails  if i[-4::] == ".jpg"]
+    thumbnails = [file[0:-4] for file in jpegs]
+    return render_template('landingPage.html', thumbnails = thumbnails)
+
+@app.route('/new', methods =['POST'])
+def new():
+    link = request.form["link"]
+    if not link:
+        return "Submit a link!"
+    model = Editor(link, bucket_name='hos123', run = True)
+    return render_template('vid.html', vid_name=model.title[-4::])
 
 @app.route('/vid/<string:vid_name>')
 def vid(vid_name):
-
     return render_template('vid.html',vid_name=vid_name)
 
 
