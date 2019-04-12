@@ -9,12 +9,14 @@ from transcription_job import *
 import pandas as pd
 import youtube_dl
 from youtube_dl import YoutubeDL
+import numpy as np
 # import pygame
 import os
 
 
 class Editor:
     def __init__(self, video_link, bucket_name, run=False):
+        os.chdir('/home/justin/Downloads/Capstone/static/videos')
         self.video_link = video_link
         self.bucket_name = bucket_name
         self.title = None
@@ -25,11 +27,11 @@ class Editor:
             self.run()
 
     def run(self):
-        os.chdir('/home/justin/Downloads/Capstone/static/videos')
         self.start_yt_job()
         status = self.output_job()
         self.new_model = self.cleaning_modeling(status)
-        self.summarized_video()
+        new_tcs = self.combine_sentences()
+        self.summarized_video(new_tcs)
 
 
     def start_yt_job(self):
@@ -63,11 +65,24 @@ class Editor:
         self.tfidf_per_word = self.new_model.tfidf_per_word
         self.df = self.new_model.df
 
-    def summarized_video(self):
-        os.chdir('/home/justin/Downloads/Capstone/static/videos')
-        video = VideoFileClip(self.title)
-        cuts = [video.subclip(float(i),float(j)) for i,j in zip(self.df.TimeIn.values, self.df.TimeOut.values)]
-        concatenate_videoclips(cuts).write_videofile(self.title[0:-4]+'s.mp4', codec = 'mpeg4')
+    def combine_sentences(self):
+        data = self.df.reset_index()
+        similar =[value-index for index,value in enumerate(data['index'].values,0)]
 
+        consec_tcs = dict((el,[]) for el in list(set(similar)))
+
+        for i,j in zip(similar,zip(data['TimeIn'].values,data['TimeOut'].values)):
+            consec_tcs[i].append(np.array(j).astype(float))
+
+        b = [np.concatenate(v).ravel().tolist() for k,v in consec_tcs.items()]
+        new_tcs = [[np.amin(i),np.amax(i)] for i in b if (np.amax(i)-np.amin(i)) >=2]
+        return new_tcs
+
+
+    def summarized_video(self,new_tcs):
+        video = VideoFileClip(self.title)
+        cuts = [video.subclip(float(i[0]),float(i[1])) for i in new_tcs]
+        concatenate_videoclips(cuts).write_videofile(self.title[0:-4]+'s.mp4', codec = 'mpeg4')
+        os.chdir('/home/justin/Downloads/Capstone')
 
 #One big problem was that tf idf of the whole speech didn't work at all because stories were linear. All speeches have a linear progression leading up to the conclusion, so we had to figure out a way to

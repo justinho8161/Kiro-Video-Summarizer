@@ -1,26 +1,28 @@
-import sqlite3
-conn = sqlite3.connect('example.db')
+from dbSQL import *
+from editing import *
+import pickle
+import os
 
-
-
-link = 'https://www.youtube.com/watch?v=chVOJ7AzIMg'
-model = Editor(link, bucket_name='hos123', run = True)
-
+# outfile = open('session.pkl','wb')
+# pickle.dump(model, outfile)
+# outfile.close()
 pd.set_option('display.max_rows', 500)
-test = model.df
-model.df.to_csv
-test = test[test['Duration']>2].reset_index()
+infile = open('session.pkl','rb')
+new_dict = pickle.load(infile)
+infile.close()
+
+os.chdir('/home/justin/Downloads/Capstone/static/videos')
+new_test.summarized_video(new_test.combine_sentences())
 
 
-test1 = test['index'].values
-test1
+def summarized_video():
+    video = VideoFileClip(new_dict.title)
+    cuts = [video.subclip(float(i),float(j)) for i,j in zip(new_dict.df.TimeIn.values,new_dict.df.TimeOut.values)]
+    concatenate_videoclips(cuts).write_videofile(new_dict.title[0:-4]+'s.mp4', codec = 'mpeg4')
+    os.chdir('/home/justin/Downloads/Capstone')
+summarized_video()
+combine_sentences(test)
 
-for i,j in enumerate(test['index'].values):
-    previousIndex = j-1
-    beginTC = test[test['index'] == j]['TimeIn'].values
-    endTC = test[test['index'] == j]['TimeOut'].values
-    if test['index'].values[i-1] == previousIndex:
-        print(endTC)
 # def summarized_video(new_df, video_name, output_name):
 #     video = VideoFileClip(video_name)
 #     cuts = [video.subclip(float(i[0]),float(i[1])) for i in new_df.TimeCodes.values]

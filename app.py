@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from string import Template
 import os
 from editing import *
+from dbSQL import *
+import pickle
 
 app = Flask(__name__)
 
@@ -19,11 +21,19 @@ def new():
     if not link:
         return "Submit a link!"
     model = Editor(link, bucket_name='hos123', run = True)
-    return render_template('vid.html', vid_name=model.title[-4::])
+    new_entry = Database(model, run=True)
+    model_info = new_entry.find_entry(model.title)
+
+    outfile = open('session.pkl','wb')
+    pickle.dump(model, outfile)
+    outfile.close()
+    return render_template('vid.html', vid_name=model.title[-4::], model_info=model_info)
 
 @app.route('/vid/<string:vid_name>')
 def vid(vid_name):
-    return render_template('vid.html',vid_name=vid_name)
+    new_entry = Database()
+    model_info = new_entry.find_entry(vid_name+".mp4")
+    return render_template('vid.html',vid_name=vid_name, model_info=model_info)
 
 
 if __name__ == '__main__':
