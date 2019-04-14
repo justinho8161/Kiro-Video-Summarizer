@@ -33,12 +33,12 @@ class Database:
         Full_Transcript = self.model.transcript
         Cleaned_Transcript = ".".join(self.model.df.Sentence.values)
         Important_Words = self.convert_top_words()
-        self.con.cursor().execute('''INSERT IGNORE INTO transcripts(video_id, name_of_video, Full_Transcript, Cleaned_Transcript, Important_Words)
+        self.con.cursor().execute('''INSERT OR IGNORE INTO transcripts(video_id, name_of_video, Full_Transcript, Cleaned_Transcript, Important_Words)
                     VALUES(?,?,?,?,?)''',(video_id, name_of_video, Full_Transcript, Cleaned_Transcript, Important_Words))
 
     def find_entry(self, title):
         c = self.con.cursor()
-        c.execute(''' SELECT * from transcripts where video_id = ?''',(title,))
+        c.execute(''' SELECT DISTINCT * from transcripts where video_id = ?''',(title,))
         entry = c.fetchall()
         self.close_db()
         return entry

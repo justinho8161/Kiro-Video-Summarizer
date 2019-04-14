@@ -75,7 +75,8 @@ class Editor:
             consec_tcs[i].append(np.array(j).astype(float))
 
         b = [np.concatenate(v).ravel().tolist() for k,v in consec_tcs.items()]
-        new_tcs = [[np.amin(i),np.amax(i)] for i in b if (np.amax(i)-np.amin(i)) >=2]
+        new_tcs = [[np.amin(i),np.amax(i)] for i in b]
+        # if (np.amax(i)-np.amin(i)) >=2
         return new_tcs
 
 

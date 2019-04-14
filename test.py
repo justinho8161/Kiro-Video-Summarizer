@@ -3,25 +3,31 @@ from editing import *
 import pickle
 import os
 
-# outfile = open('session.pkl','wb')
-# pickle.dump(model, outfile)
-# outfile.close()
 pd.set_option('display.max_rows', 500)
 infile = open('session.pkl','rb')
 new_dict = pickle.load(infile)
 infile.close()
 
+link = 'https://www.youtube.com/watch?v=iCvmsMzlF7o&pbj'
+model = Editor(link, bucket_name='hos123', run = True)
+
+outfile = open('session.pkl','wb')
+pickle.dump(model, outfile)
+outfile.close()
+
+infile = open('session.pkl','rb')
+new_dict = pickle.load(infile)
+infile.close()
+
+new_dict.df[new_dict.df.Duration <3].mean()
+new = Database(new_dict, run=False)
+new_dict.title
+new.find_entry(new_dict.title)
+
+
 os.chdir('/home/justin/Downloads/Capstone/static/videos')
 new_test.summarized_video(new_test.combine_sentences())
 
-
-def summarized_video():
-    video = VideoFileClip(new_dict.title)
-    cuts = [video.subclip(float(i),float(j)) for i,j in zip(new_dict.df.TimeIn.values,new_dict.df.TimeOut.values)]
-    concatenate_videoclips(cuts).write_videofile(new_dict.title[0:-4]+'s.mp4', codec = 'mpeg4')
-    os.chdir('/home/justin/Downloads/Capstone')
-summarized_video()
-combine_sentences(test)
 
 # def summarized_video(new_df, video_name, output_name):
 #     video = VideoFileClip(video_name)

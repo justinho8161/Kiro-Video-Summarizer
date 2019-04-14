@@ -20,14 +20,13 @@ def new():
     link = request.form["link"]
     if not link:
         return "Submit a link!"
+
     model = Editor(link, bucket_name='hos123', run = True)
     new_entry = Database(model, run=True)
+    new_entry = Database(model, run=False)
     model_info = new_entry.find_entry(model.title)
 
-    outfile = open('session.pkl','wb')
-    pickle.dump(model, outfile)
-    outfile.close()
-    return render_template('vid.html', vid_name=model.title[-4::], model_info=model_info)
+    return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info)
 
 @app.route('/vid/<string:vid_name>')
 def vid(vid_name):
