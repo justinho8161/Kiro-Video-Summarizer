@@ -13,7 +13,7 @@ def homepage():
     mp4s = [i for i in thumbnails  if i[-4::] == ".mp4"]
     jpegs = [i for i in thumbnails  if i[-4::] == ".jpg"]
     thumbnails = [file[0:-4] for file in jpegs]
-    return render_template('landingPage.html', thumbnails = thumbnails)
+    return render_template('index.html', thumbnails = thumbnails)
 
 @app.route('/new', methods =['POST'])
 def new():

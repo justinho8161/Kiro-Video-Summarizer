@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <video poster="../static/videos/{{vid_name}}.jpg" controls="controls">
+{% extends "layout.html" %}
+
+
+{% block body %}
+  <div style="display:none;" id="video1">
+    <video class="lg-video-object lg-html5" poster="../static/videos/{{vid_name}}.jpg" controls preload="none">
       <source src="../static/videos/{{vid_name}}s.mp4" type="video/mp4"  />
     </video>
-{{model_info}}
-  </body>
-</html>
+  </div
+    <div class="card container">
+        <div class="card-body row">
+          <div class="col-md-6 scrollable">{{model_info[0][2]}}</div>
+          <div class="col-md-6 scrollable">{{model_info[0][3]}}</div>
+        </div>
+    </div>
+{% endblock %}

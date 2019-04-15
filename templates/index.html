@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+
+{% block body %}
+
+  <!-- Navigation -->
+  <a class="menu-toggle rounded" href={{ url_for('vid' ,vid_name=thumbnail )}}>
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a class="js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#page-top">Home</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#about">About</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#services">Services</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#portfolio">Portfolio</a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a class="js-scroll-trigger" href="#contact">Contact</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Header -->
+  <div class="wrapper">
+    <div class="page-header header-filter">
+      <div class="squares square1"></div>
+      <div class="squares square2"></div>
+      <div class="squares square3"></div>
+      <div class="squares square4"></div>
+      <div class="squares square5"></div>
+      <div class="squares square6"></div>
+      <div class="squares square7"></div>
+      <div class="container">
+        <div class="content-center brand">
+          <h1 class="ml12">Summarize Your Videos</h3>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+          <div class="wrap">
+            <form action="{{ url_for('new') }}" method="post">
+              <div class="mat-div">
+                <label for="first-name" class="mat-label">Link</label>
+                <input id="url" type="url" name="link" class="mat-input" required data-error-msg="Must be a valid URL">
+              </div>
+
+            <button type="submit" class ="btn btn-primary btn-xl">Submit</button>
+          </form>
+          </div>
+          <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View our videos here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section class="content-section" id="about">
+    <div class="container">
+      <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Curated Videos</h1>
+      <hr class="mt-2 mb-5">
+      <div class="row text-center text-lg-left">
+          {% for thumbnail in thumbnails %}
+        <div class="view view-first col-lg-3 col-md-4 col-6">
+          <a name="name" href={{ url_for('vid' ,vid_name=thumbnail )}} class="d-block mb-4 h-100">
+                <img class="img-fluid img-thumbnail" src="../static/videos/{{thumbnail}}.jpg" alt="">
+          </a>
+        </div>
+          {% endfor %}
+      </div>
+    </div>
+<!-- /.container -->
+  </section>
+
+
+{% endblock %}

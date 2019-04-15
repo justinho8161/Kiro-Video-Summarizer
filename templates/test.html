@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <link type="text/css" rel="stylesheet" href="../static/css/lightgallery.css" />
+    <!-- Bootstrap Core CSS -->
+
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <!-- Hidden video div -->
+    <div style="display:none;" id="video1">
+      <video class="lg-video-object lg-html5" poster="../static/videos/zUyH3XhpLTo.jpg" controls preload="none">
+        <source src="../static/videos/zUyH3XhpLTos.mp4" type="video/mp4"  />
+      </video>
+    </div>
+    <div style="display:none;" id="video2">
+      <video class="lg-video-object lg-html5" poster="../static/videos/zUyH3XhpLTo.jpg" controls preload="none">
+        <source src="../static/videos/zUyH3XhpLTos.mp4" type="video/mp4"  />
+      </video>
+    </div>
+
+    <!-- data-src should not be provided when you use html5 videos -->
+    <ul id="html5-videos">
+      <li data-poster="video-poster1.jpg" data-sub-html="video caption1" data-html="#video1" >
+          <img src="zUyH3XhpLTo.jpg" />
+      </li>
+      <li data-poster="video-poster2.jpg" data-sub-html="video caption2" data-html="#video2" >
+          <img src="zUyH3XhpLTo.jpg" />
+      </li>
+      ...
+    </ul>
+
+
+    <!-- Plugin JavaScript -->
+    <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../static/js/lightgallery.js"></script>
+    <script src="../static/vendor/jquery/jquery2.min.js"></script>
+    <script src="../static/js/lg-thumbnail.min.js"></script>
+    <script src="../static/js/lg-fullscreen.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="../static/js/stylish-portfolio.js"></script>
+
+  </body>
+</html>
