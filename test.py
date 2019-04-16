@@ -19,10 +19,18 @@ infile = open('session.pkl','rb')
 new_dict = pickle.load(infile)
 infile.close()
 
+words = len(new_dict.transcript.split(" "))
+new_words = len(".".join(new_dict.df.Sentence.values).split(" "))
+((words-new_words)/words)*100
+
 new_dict.df[new_dict.df.Duration <3].mean()
 new = Database(new_dict, run=False)
 new_dict.title
 new.find_entry(new_dict.title)
+
+new = Database(new_dict, run=True)
+new.create_db()
+new.close_db()
 
 
 os.chdir('/home/justin/Downloads/Capstone/static/videos')

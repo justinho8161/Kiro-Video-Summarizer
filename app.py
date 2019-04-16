@@ -10,10 +10,16 @@ app = Flask(__name__)
 @app.route('/')
 def homepage():
     thumbnails = os.listdir('static/videos')
-    mp4s = [i for i in thumbnails  if i[-4::] == ".mp4"]
     jpegs = [i for i in thumbnails  if i[-4::] == ".jpg"]
     thumbnails = [file[0:-4] for file in jpegs]
-    return render_template('index.html', thumbnails = thumbnails)
+    vid_titles = []
+    for i in thumbnails:
+        new_entry = Database(run=False)
+        model_info = new_entry.find_entry(i+'.mp4')
+        vid_titles.append(model_info[0][1])
+    new_titles = [(i,j) for i,j in zip(thumbnails,vid_titles)]
+
+    return render_template('index.html', thumbnails = new_titles)
 
 @app.route('/new', methods =['POST'])
 def new():
@@ -25,14 +31,15 @@ def new():
     new_entry = Database(model, run=True)
     new_entry = Database(model, run=False)
     model_info = new_entry.find_entry(model.title)
-
-    return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info)
+    top_words = model_info[0][4].split("|")
+    return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info, top_words=top_words)
 
 @app.route('/vid/<string:vid_name>')
 def vid(vid_name):
     new_entry = Database()
     model_info = new_entry.find_entry(vid_name+".mp4")
-    return render_template('vid.html',vid_name=vid_name, model_info=model_info)
+    top_words = model_info[0][4].split("|")
+    return render_template('vid.html',vid_name=vid_name, model_info=model_info, top_words=top_words)
 
 
 if __name__ == '__main__':

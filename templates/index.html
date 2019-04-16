@@ -10,24 +10,21 @@
   <nav id="sidebar-wrapper">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
-        <a class="js-scroll-trigger" href="#page-top">Start Bootstrap</a>
+        <a class="js-scroll-trigger" href="#page-top">Justin Ho</a>
       </li>
       <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger" href="#page-top">Home</a>
+        <a class="js-scroll-trigger" href="#page-top">About the Project</a>
       </li>
       <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger" href="#about">About</a>
+        <a class="js-scroll-trigger" href="">About Me</a>
       </li>
       <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger" href="#services">Services</a>
+        <a class="js-scroll-trigger" href="https://github.com/justinho8161/Price-Regression-Price-Study">Vehicle Price Regression</a>
+        <a class="js-scroll-trigger" href="https://github.com/justinho8161/Churn-Prediction">Predicting Customer Churn</a>
+        <a class="js-scroll-trigger" href="https://github.com/justinho8161/Churn-Prediction">Movie Recommender System</a>
+        <a class="js-scroll-trigger" href="https://github.com/justinho8161/Churn-Prediction">Predicting Fraud Detection</a>
       </li>
-      <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger" href="#portfolio">Portfolio</a>
-      </li>
-      <li class="sidebar-nav-item">
-        <a class="js-scroll-trigger" href="#contact">Contact</a>
-      </li>
-    </ul>
+      </ul>
   </nav>
 
   <!-- Header -->
@@ -42,7 +39,7 @@
       <div class="squares square7"></div>
       <div class="container">
         <div class="content-center brand">
-          <h1 class="ml12">Summarize Your Videos</h3>
+          <h1 class="ml12">Summarize Your Videos</h1>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 
           <div class="wrap">
@@ -69,11 +66,12 @@
       <div class="row text-center text-lg-left">
           {% for thumbnail in thumbnails %}
         <div class="view view-first col-lg-3 col-md-4 col-6">
-          <a name="name" href={{ url_for('vid' ,vid_name=thumbnail )}} class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="../static/videos/{{thumbnail}}.jpg" alt="">
+          <a name="name" href={{ url_for('vid' ,vid_name=thumbnail[0] )}} class="d-block mb-4 h-100" title="{{thumbnail[1]}}">
+                <img class="img-fluid img-thumbnail" src="../static/videos/{{thumbnail[0]}}.jpg">
           </a>
         </div>
           {% endfor %}
+
       </div>
     </div>
 <!-- /.container -->
