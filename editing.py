@@ -12,7 +12,7 @@ from youtube_dl import YoutubeDL
 import numpy as np
 # import pygame
 import os
-
+from cloud import wordCloud
 
 class Editor:
     def __init__(self, video_link, bucket_name, run=False):
@@ -32,7 +32,7 @@ class Editor:
         self.new_model = self.cleaning_modeling(status)
         new_tcs = self.combine_sentences()
         self.summarized_video(new_tcs)
-
+        wordCloud(self.new_model, run=True)
 
     def start_yt_job(self):
         ydl_opts = {'outtmpl': '%(id)s.%(ext)s', 'format':'mp4', 'writethumbnail': True}

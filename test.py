@@ -2,6 +2,7 @@ from dbSQL import *
 from editing import *
 import pickle
 import os
+from cloud import wordCloud
 
 pd.set_option('display.max_rows', 500)
 infile = open('session.pkl','rb')
@@ -18,6 +19,11 @@ outfile.close()
 infile = open('session.pkl','rb')
 new_dict = pickle.load(infile)
 infile.close()
+os.chdir('/home/justin/Downloads/Capstone/static/videos')
+
+wordCloud(new_dict, run=True)
+
+
 
 words = len(new_dict.transcript.split(" "))
 new_words = len(".".join(new_dict.df.Sentence.values).split(" "))

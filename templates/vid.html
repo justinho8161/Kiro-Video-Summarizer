@@ -3,42 +3,66 @@
 
 {% block body %}
   <div class="">
-      <div class="" style="float:right; padding-right:5%; padding-top:5%;">
+      <div class="" style="float:right; padding-right:8%; padding-top:3%;">
         <video poster="../static/videos/{{vid_name}}.jpg" controls preload="none" width="1280" height="720" style = "display: block; margin: 0 auto;">
           <source src="../static/videos/{{vid_name}}s.mp4" type="video/mp4"/>
         </video>
       </div>
-      <div class="" style="padding-left: 5%; padding-top:5%; margin:5px;">
+      <div class="" style="padding-left: 1%; padding-top:5%; margin:5px;">
         <h3>Top Words</h3>
-        <ol style="padding: 30px 0 10px 60px;">
+        <ol style="padding: 0 0 10px 60px;">
           {% for word in top_words %}
             <li class="" style="margin:5px;">{{word}} </li>
           {% endfor %}
         </ol>
       </div>
     </div>
+    <br>
 
-    <div class="">
-      {{model_info[0][5]}}
+    <div class="content-center brand" style="padding-top:10%; text-align:center;">
+      <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View the Transcripts Here</a>
     </div>
-    <div class="">
-            {{model_info[0][6]}}
-    </div>
-    <div class="">
-      {{model_info[0][11]}}
-    </div>
-      <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View our videos here</a>
-    <div class="card container">
-        <div class="card-body row">
-          <div class="">
-            transcript
+    <br>
+
+    <section id="header" style="padding-top:10%;">
+      <div class="container" id="about">
+          <div class="row">
+            <div class="col-md-3 col-sm-3 col-lg-3">
+                <div class="">
+                    Full Duration: {{model_info[0][5]}}
+                </div>
+                <div class="">
+                  Reduced Duration:{{model_info[0][6]}}
+                </div>
+                <div class="">
+                  {{model_info[0][7]}}
+                </div>
+            </div>
+          <div class="col-md-3 col-sm-3 col-lg-3">
+                <div class="">
+                    Full Word Count: {{model_info[0][8]}}
+                </div>
+                <div class="">
+                  Reduced Word Count:{{model_info[0][9]}}
+                </div>
+                <div class="">
+                  {{model_info[0][10]}}% Difference
+                </div>
           </div>
-          <div class="col-md-5 col-sm-5 col-lg-5">{{model_info[0][2]}}</div>
-          <div class="">
-            new_transcript
+          <div class="col-md-6 col-sm-6 col-lg-6">
+                <img src="../static/videos/{{vid_name}}s.png"/>
           </div>
-          <div class="col-md-5 col-sm-5 col-lg-5">{{model_info[0][3]}}</div>
         </div>
-    </div>
+      </div>
+    </section>
 
+
+    <section>
+      <div class="container" style="padding-top:5%;" id="about">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-lg-6"><h2>Transcript</h2>{{model_info[0][2]}}</div>
+            <div class="col-md-6 col-sm-6 col-lg-6"><h2>Cleaned Transcript</h2>{{model_info[0][3]}}</div>
+          </div>
+        </div>
+    </section>
 {% endblock %}

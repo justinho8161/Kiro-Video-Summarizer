@@ -32,6 +32,7 @@ def new():
     new_entry = Database(model, run=False)
     model_info = new_entry.find_entry(model.title)
     top_words = model_info[0][4].split("|")
+
     return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info, top_words=top_words)
 
 @app.route('/vid/<string:vid_name>')
