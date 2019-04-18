@@ -18,11 +18,12 @@ import random
 
 class wordCloud:
 
-    def __init__(self, model, run=False):
-        self.model = model
-        self.input = self.model.title[:-4]
+    def __init__(self,  words, title, run=False):
+        os.chdir('/home/justin/Downloads/Capstone/static/videos')
+        self.words = words
+        self.title = title[:-4]
         if run:
-            self.makeImage(self.getFrequencyDictForText("".join(self.model.df.Cleaned_Sentence.values)), self.input)
+            self.makeImage(self.getFrequencyDictForText("".join(self.words)), self.title)
 
     def getFrequencyDictForText(self,sentence):
         fullTermsDict = multidict.MultiDict()
@@ -61,7 +62,7 @@ class wordCloud:
         plt.axis("off")
         fig.savefig("{}.png".format(input_file))
         plt.close(fig)
-        
+
         im = Image.open("{}.png".format(input_file))
         im = self.trim(im)
         im = im.resize((700, 500), Image.ANTIALIAS)

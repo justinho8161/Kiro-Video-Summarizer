@@ -2,6 +2,7 @@ from moviepy.editor import VideoFileClip
 import sqlite3
 import os
 
+
 class Database:
 
     def __init__(self, model=None, run=False):
@@ -35,11 +36,11 @@ class Database:
         duration = "{}:{}:{}".format(int(clipDuration/3600), int((clipDuration%3600)), int(clipDuration%60))
 
         newClipDuration = VideoFileClip(id[:-4]+'s.mp4').duration
-        newDuration = "{}:{}:{}".format(int(newClipDuration/3600), int((newClipDuration%3600)), int(newClipDuration%60))
+        newDuration = "{}:{}:{}".format(int(newClipDuration/3600), int((newClipDuration/60)), int(newClipDuration%60))
 
-        duration_difference = "{}% Difference".format(((clipDuration-newClipDuration)/clipDuration)*100)
+        duration_difference = "{}".format(((clipDuration-newClipDuration)/clipDuration)*100)
         os.chdir('/home/justin/Downloads/Capstone')
-        return clipDuration, newClipDuration, duration_difference
+        return duration, newDuration, duration_difference
 
     def get_word_counts(self, model):
         words = len(model.transcript.split(" "))

@@ -4,7 +4,8 @@ import os
 from editing import *
 from dbSQL import *
 import pickle
-
+from cloud import wordCloud
+# https://codepen.io/mineyazicioglu/pen/aOYBay
 app = Flask(__name__)
 
 @app.route('/')
@@ -33,14 +34,28 @@ def new():
     model_info = new_entry.find_entry(model.title)
     top_words = model_info[0][4].split("|")
 
-    return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info, top_words=top_words)
+    file = open("{}.txt".format(model.title[:-4]),"r")
+    summarized_srt = []
+    for line in file:
+        line = line.strip().split("|")
+        summarized_srt.append((line[0],line[2],line[1]))
+
+
+    return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info, top_words=top_words, summarized_srt=summarized_srt)
 
 @app.route('/vid/<string:vid_name>')
 def vid(vid_name):
     new_entry = Database()
     model_info = new_entry.find_entry(vid_name+".mp4")
     top_words = model_info[0][4].split("|")
-    return render_template('vid.html',vid_name=vid_name, model_info=model_info, top_words=top_words)
+    os.chdir('/home/justin/Downloads/Capstone/static/videos')
+    file = open("{}.txt".format(model_info[0][0][:-4]),"r")
+    summarized_srt = []
+    for line in file:
+        line = line.strip().split("|")
+        summarized_srt.append((line[0],line[2],line[1]))
+
+    return render_template('vid.html',vid_name=vid_name, model_info=model_info, top_words=top_words, summarized_srt=summarized_srt)
 
 
 if __name__ == '__main__':

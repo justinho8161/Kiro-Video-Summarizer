@@ -10,7 +10,6 @@ import pandas as pd
 import youtube_dl
 from youtube_dl import YoutubeDL
 import numpy as np
-# import pygame
 import os
 from cloud import wordCloud
 
@@ -31,8 +30,9 @@ class Editor:
         status = self.output_job()
         self.new_model = self.cleaning_modeling(status)
         new_tcs = self.combine_sentences()
+        wordCloud(self.df.Cleaned_Sentence.values, self.title, run=True)
+        self.create_srt()
         self.summarized_video(new_tcs)
-        wordCloud(self.new_model, run=True)
 
     def start_yt_job(self):
         ydl_opts = {'outtmpl': '%(id)s.%(ext)s', 'format':'mp4', 'writethumbnail': True}
@@ -79,11 +79,20 @@ class Editor:
         # if (np.amax(i)-np.amin(i)) >=2
         return new_tcs
 
-
     def summarized_video(self,new_tcs):
         video = VideoFileClip(self.title)
         cuts = [video.subclip(float(i[0]),float(i[1])) for i in new_tcs]
         concatenate_videoclips(cuts).write_videofile(self.title[0:-4]+'s.mp4', codec = 'mpeg4')
         os.chdir('/home/justin/Downloads/Capstone')
 
-#One big problem was that tf idf of the whole speech didn't work at all because stories were linear. All speeches have a linear progression leading up to the conclusion, so we had to figure out a way to
+    def create_srt(self):
+        new_index = self.df
+        new_index['difference'] = pd.to_numeric(new_index['TimeOut'])-pd.to_numeric(new_index['TimeIn'])
+        new_index['new_col'] = list(zip(new_index.Sentence, new_index.difference))
+
+        file = open("{}.txt".format(self.title[:-4]),"w")
+        count = 0
+        for index,value in enumerate(new_index.new_col.values, start=1):
+            file.write("c{} | {} | {} \n".format(index, value[0],count))
+            count+=int(value[1])
+        file.close()

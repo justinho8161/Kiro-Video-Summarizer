@@ -2,66 +2,71 @@
 
 
 {% block body %}
-  <div class="">
-      <div class="" style="float:right; padding-right:8%; padding-top:3%;">
-        <video poster="../static/videos/{{vid_name}}.jpg" controls preload="none" width="1280" height="720" style = "display: block; margin: 0 auto;">
-          <source src="../static/videos/{{vid_name}}s.mp4" type="video/mp4"/>
-        </video>
-      </div>
-      <div class="" style="padding-left: 1%; padding-top:5%; margin:5px;">
-        <h3>Top Words</h3>
-        <ol style="padding: 0 0 10px 60px;">
-          {% for word in top_words %}
-            <li class="" style="margin:5px;">{{word}} </li>
-          {% endfor %}
-        </ol>
-      </div>
-    </div>
-    <br>
-
-    <div class="content-center brand" style="padding-top:10%; text-align:center;">
-      <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View the Transcripts Here</a>
-    </div>
-    <br>
-
-    <section id="header" style="padding-top:10%;">
-      <div class="container" id="about">
-          <div class="row">
-            <div class="col-md-3 col-sm-3 col-lg-3">
-                <div class="">
-                    Full Duration: {{model_info[0][5]}}
+    <section style="padding-right:8%">
+        <div class="container" style ="text-align:center;">
+              <div class="row">
+                <div class="" style="padding-top:3%;">
+                  <video poster="../static/videos/{{vid_name}}.jpg" controls preload="none" width="1280" height="720" style = "display: block; margin: 0 auto;">
+                    <source src="../static/videos/{{vid_name}}s.mp4" type="video/mp4"/>
+                  </video>
                 </div>
-                <div class="">
-                  Reduced Duration:{{model_info[0][6]}}
+              </div>
+              <div class="row" style="padding-bottom:5%;">
+                <div class="col-md-6 col-sm-6 col-lg-6" style="padding-top:5%; text-align:center;">
+                  <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View the Transcripts Here</a>
                 </div>
-                <div class="">
-                  {{model_info[0][7]}}
+                <div class="col-md-6 col-sm-6 col-lg-6" style="padding-top:5%; text-align:center;">
+                  <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View the Stats Here</a>
                 </div>
+              </div>
             </div>
-          <div class="col-md-3 col-sm-3 col-lg-3">
-                <div class="">
-                    Full Word Count: {{model_info[0][8]}}
-                </div>
-                <div class="">
-                  Reduced Word Count:{{model_info[0][9]}}
-                </div>
-                <div class="">
-                  {{model_info[0][10]}}% Difference
-                </div>
-          </div>
-          <div class="col-md-6 col-sm-6 col-lg-6">
-                <img src="../static/videos/{{vid_name}}s.png"/>
-          </div>
+      <br>
+    </section>
+
+    <section id="header">
+      <div class="container" id="about" style="padding-top:5%;">
+          <div class="row">
+              <div class="col-md-8 col-sm-8 col-lg-8" style="">
+                  <div class="changeColor" style="font-size:20px;">
+                      Original Duration: {{model_info[0][5]}}
+                  </div>
+                  <div class="changeColor" style="font-size:20px;">
+                    Summarized Duration:{{model_info[0][6]}}
+                  </div>
+                  <div class="changeColor" style="font-size:20px;">
+                    {{model_info[0][7]}}% Difference
+                  </div>
+                  <br>
+                  <div class="changeColor" style="font-size:20px;">
+                      Original Word Count: {{model_info[0][8]}}
+                  </div>
+                  <div class="changeColor" style="font-size:20px;">
+                    Summarized Word Count:{{model_info[0][9]}}
+                  </div>
+                  <div class="changeColor" style="font-size:20px;">
+                    {{model_info[0][10]}}% Difference
+                  </div>
+
+                  <br><br>
+                  <ol class="changeColor" style="padding: 0 15% 0px 30px;margin-left:20%;">
+                    {% for word in top_words %}
+                      <li class="" style="margin:1px; font-size:20px;">{{word}} </li>
+                    {% endfor %}
+                  </ol>
+
+              </div>
+            <div class="col-md-4 col-sm-4 col-lg-4" style="padding-top:30%;">
+                  <img src="../static/videos/{{vid_name}}s.png"/>
+            </div>
         </div>
       </div>
     </section>
 
-
     <section>
       <div class="container" style="padding-top:5%;" id="about">
           <div class="row">
-            <div class="col-md-6 col-sm-6 col-lg-6"><h2>Transcript</h2>{{model_info[0][2]}}</div>
-            <div class="col-md-6 col-sm-6 col-lg-6"><h2>Cleaned Transcript</h2>{{model_info[0][3]}}</div>
+            <div class="col-md-6 col-sm-6 col-lg-6 scrollable" style="color:#fff;"><h2 style="color:#fff;">Original Transcript</h2>{{model_info[0][2]}}</div>
+            <div class="col-md-6 col-sm-6 col-lg-6 scrollable" style="color:#fff;"><h2 style="color:#fff;">Summarized Transcript</h2> {{model_info[0][3]}} </div>
           </div>
         </div>
     </section>
