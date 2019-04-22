@@ -2,21 +2,32 @@
 
 
 {% block body %}
-    <section style="padding-right:8%">
-        <div class="container" style ="text-align:center;">
+    <section style="">
+        <div class="container-fluid" style ="">
               <div class="row">
-                <div class="" style="padding-top:3%;">
-                  <video poster="../static/videos/{{vid_name}}.jpg" controls preload="none" width="1280" height="720" style = "display: block; margin: 0 auto;">
+                <div class="col-md-8 col-sm-8 col-lg-8" style="padding:5% 0% 0% 0%;">
+                  <video poster="../static/videos/{{vid_name}}.jpg" controls preload="none" width="960" height="540" style = "display: block; margin: 0 auto;">
                     <source src="../static/videos/{{vid_name}}s.mp4" type="video/mp4"/>
                   </video>
                 </div>
+                <div class="col-md-4 col-sm-4 col-lg-4 scrollable" style="padding:5% 5% 5% 0%; height: 600px; overflow-y: scroll;">
+                    {% for sentences in new_transcript %}
+                        {% if sentences[0] %}
+                            <span style="background-color:yellow; font-size:18px;">{{sentences[1]}}</span>
+                        {% else %}
+                              <span style="color:#fff; font-size:18px;">{{sentences[1]}}</span>
+                        {% endif %}
+
+                    {% endfor %}
               </div>
-              <div class="row" style="padding-bottom:5%;">
-                <div class="col-md-6 col-sm-6 col-lg-6" style="padding-top:5%; text-align:center;">
-                  <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View the Transcripts Here</a>
-                </div>
+
+              </div>
+              <div class="row" style="padding-bottom:10%;">
                 <div class="col-md-6 col-sm-6 col-lg-6" style="padding-top:5%; text-align:center;">
                   <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View the Stats Here</a>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6" style="padding-top:5%; text-align:center;">
+                  <a class="btn btn-primary btn-xl js-scroll-trigger" href="#transcript">View the Transcripts Here</a>
                 </div>
               </div>
             </div>
@@ -24,7 +35,7 @@
     </section>
 
     <section id="header">
-      <div class="container" id="about" style="padding-top:5%;">
+      <div class="container" id="about" style="padding-top:2%;">
           <div class="row">
               <div class="col-md-8 col-sm-8 col-lg-8" style="">
                   <div class="changeColor" style="font-size:20px;">
@@ -55,7 +66,7 @@
                   </ol>
 
               </div>
-            <div class="col-md-4 col-sm-4 col-lg-4" style="padding-top:30%;">
+            <div class="col-md-4 col-sm-4 col-lg-4" style="padding:30% 5% 0 0;">
                   <img src="../static/videos/{{vid_name}}s.png"/>
             </div>
         </div>
@@ -63,7 +74,7 @@
     </section>
 
     <section>
-      <div class="container" style="padding-top:5%;" id="about">
+      <div class="container" style="padding-top:5%;" id="transcript">
           <div class="row">
             <div class="col-md-6 col-sm-6 col-lg-6 scrollable" style="color:#fff;"><h2 style="color:#fff;">Original Transcript</h2>{{model_info[0][2]}}</div>
             <div class="col-md-6 col-sm-6 col-lg-6 scrollable" style="color:#fff;"><h2 style="color:#fff;">Summarized Transcript</h2> {{model_info[0][3]}} </div>

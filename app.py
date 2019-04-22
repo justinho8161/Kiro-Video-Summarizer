@@ -5,15 +5,21 @@ from editing import *
 from dbSQL import *
 import pickle
 from cloud import wordCloud
-# https://codepen.io/mineyazicioglu/pen/aOYBay
+import sys
+
+
+dirPath = '/home/justin/Downloads/Capstone/static/videos'
+
 app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    thumbnails = os.listdir('static/videos')
+
+    thumbnails = os.listdir(dirPath)
     jpegs = [i for i in thumbnails  if i[-4::] == ".jpg"]
     thumbnails = [file[0:-4] for file in jpegs]
     vid_titles = []
+    os.chdir(dirPath)
     for i in thumbnails:
         new_entry = Database(run=False)
         model_info = new_entry.find_entry(i+'.mp4')
@@ -28,24 +34,26 @@ def new():
     if not link:
         return "Submit a link!"
 
-    model = Editor(link, bucket_name='hos123', run = True)
+    model = Editor(link, path=os.chdir(dirPath), bucket_name='hos123', run = True)
+    os.chdir(dirPath)
     new_entry = Database(model, run=True)
     new_entry = Database(model, run=False)
     model_info = new_entry.find_entry(model.title)
     top_words = model_info[0][4].split("|")
+    new_transcript = [(i in model_info[0][3].split("."),i) for i in model_info[0][2].split(".")]
 
-
-    return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info, top_words=top_words)
+    return render_template('vid.html', vid_name=model.title[:-4], model_info=model_info, top_words=top_words, new_transcript=new_transcript)
 
 @app.route('/vid/<string:vid_name>')
 def vid(vid_name):
+    os.chdir(dirPath)
     new_entry = Database()
     model_info = new_entry.find_entry(vid_name+".mp4")
     top_words = model_info[0][4].split("|")
-    os.chdir('/home/justin/Downloads/Capstone/static/videos')
+    new_transcript = [(i in model_info[0][3].split("."),i) for i in model_info[0][2].split(".")]
 
-    return render_template('vid.html',vid_name=vid_name, model_info=model_info, top_words=top_words)
 
+    return render_template('vid.html',vid_name=vid_name, model_info=model_info, top_words=top_words, new_transcript=new_transcript )
 
 if __name__ == '__main__':
     app.run(use_reloader=True, debug = True)

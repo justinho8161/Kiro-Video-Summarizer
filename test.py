@@ -22,6 +22,15 @@ infile = open('session.pkl','rb')
 new_dict = pickle.load(infile)
 infile.close()
 
+dict_words = new_dict.tfidf_per_word
+top_words = sorted(dict_words.items(), key=lambda x: x[1], reverse = True)[0:20]
+
+
+top_words
+top_words = ["".join(str(i)) for i in top_words]
+top_words
+
+
 
 def create_transcript(model):
     new_index = model.df

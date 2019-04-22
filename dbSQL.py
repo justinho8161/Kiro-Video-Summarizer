@@ -27,25 +27,24 @@ class Database:
     def convert_top_words(self):
         dict_words = self.model.tfidf_per_word
         top_words = sorted(dict_words.items(), key=lambda x: x[1], reverse = True)[0:20]
+        top_words = [(i[0],round(i[1],3)) for i in top_words]
         top_words = ["".join(str(i)) for i in top_words]
         return " | ".join(top_words)
 
     def get_duration_vars(self, id):
-        os.chdir('/home/justin/Downloads/Capstone/static/videos')
         clipDuration = VideoFileClip(id).duration
-        duration = "{}:{}:{}".format(int(clipDuration/3600), int((clipDuration%3600)), int(clipDuration%60))
+        duration = "{}:{}:{}".format(int(clipDuration/3600), int((clipDuration/60)), int(clipDuration%60))
 
         newClipDuration = VideoFileClip(id[:-4]+'s.mp4').duration
         newDuration = "{}:{}:{}".format(int(newClipDuration/3600), int((newClipDuration/60)), int(newClipDuration%60))
 
-        duration_difference = "{}".format(((clipDuration-newClipDuration)/clipDuration)*100)
-        os.chdir('/home/justin/Downloads/Capstone')
+        duration_difference = "{}".format(round(((clipDuration-newClipDuration)/clipDuration)*100),2)
         return duration, newDuration, duration_difference
 
     def get_word_counts(self, model):
         words = len(model.transcript.split(" "))
         new_words = len(".".join(model.df.Sentence.values).split(" "))
-        word_difference = ((words-new_words)/words)*100
+        word_difference = round(((words-new_words)/words)*100,2)
         return words, new_words, word_difference
 
     def add_entry(self):

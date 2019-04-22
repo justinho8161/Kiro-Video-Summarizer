@@ -49,8 +49,48 @@
                 <input id="url" type="url" name="link" class="mat-input" required data-error-msg="Must be a valid URL">
               </div>
 
-            <button type="submit" class ="btn btn-primary btn-xl">Submit</button>
+            <button type="submit" onclick="move()" class ="btn btn-primary btn-xl">Submit</button>
           </form>
+
+          <style>
+          #myProgress {
+            width: 100%;
+            background-color: #ddd;
+          }
+
+          #myBar {
+            width: 0%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+          }
+          </style>
+
+          <div id="myProgress">
+            <div id="myBar">0%</div>
+          </div>
+          <br>
+
+          <script>
+          function move() {
+            var elem = document.getElementById("myBar");
+            var width = 0;
+            var id = setInterval(frame, 3000);
+            function frame() {
+              if (width >= 100) {
+                clearInterval(id);
+              } else {
+                width++;
+                elem.style.width = width + '%';
+                elem.innerHTML = width * 1  + '%';
+              }
+            }
+          }
+          </script>
+
+
           </div>
           <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">View our videos here</a>
         </div>

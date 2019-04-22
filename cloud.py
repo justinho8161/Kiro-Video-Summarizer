@@ -9,17 +9,9 @@ import matplotlib.pyplot as plt
 import pickle
 import random
 
-# infile = open('session.pkl','rb')
-# new_dict = pickle.load(infile)
-# infile.close()
-# new_dict.title[:-4]
-# os.chdir('/home/justin/Downloads/Capstone/static/videos')
-# makeImage(getFrequencyDictForText("".join(model.df.Cleaned_Sentence.values)))
-
 class wordCloud:
 
     def __init__(self,  words, title, run=False):
-        os.chdir('/home/justin/Downloads/Capstone/static/videos')
         self.words = words
         self.title = title[:-4]
         if run:

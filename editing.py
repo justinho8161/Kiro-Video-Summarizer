@@ -14,8 +14,8 @@ import os
 from cloud import wordCloud
 
 class Editor:
-    def __init__(self, video_link, bucket_name, run=False):
-        os.chdir('/home/justin/Downloads/Capstone/static/videos')
+    def __init__(self, video_link, path,  bucket_name, run=False):
+        self.path = path
         self.video_link = video_link
         self.bucket_name = bucket_name
         self.title = None
@@ -31,7 +31,6 @@ class Editor:
         self.new_model = self.cleaning_modeling(status)
         new_tcs = self.combine_sentences()
         wordCloud(self.df.Cleaned_Sentence.values, self.title, run=True)
-        self.create_srt()
         self.summarized_video(new_tcs)
 
     def start_yt_job(self):
@@ -76,14 +75,13 @@ class Editor:
 
         b = [np.concatenate(v).ravel().tolist() for k,v in consec_tcs.items()]
         new_tcs = [[np.amin(i),np.amax(i)] for i in b]
-        # if (np.amax(i)-np.amin(i)) >=2
         return new_tcs
 
     def summarized_video(self,new_tcs):
         video = VideoFileClip(self.title)
         cuts = [video.subclip(float(i[0]),float(i[1])) for i in new_tcs]
         concatenate_videoclips(cuts).write_videofile(self.title[0:-4]+'s.mp4', codec = 'mpeg4')
-        os.chdir('/home/justin/Downloads/Capstone')
+        os.chdir('../..')
 
     def create_srt(self):
         new_index = self.df
