@@ -11,14 +11,15 @@
                   </video>
                 </div>
                 <div class="col-md-4 col-sm-4 col-lg-4 scrollable" style="padding:5% 5% 5% 0%; height: 600px; overflow-y: scroll;">
+                  <span style="color:#fff; font-size:18px;">
                     {% for sentences in new_transcript %}
                         {% if sentences[0] %}
-                            <span style="background-color:yellow; font-size:18px;">{{sentences[1]}}</span>
-                        {% else %}
-                              <span style="color:#fff; font-size:18px;">{{sentences[1]}}</span>
-                        {% endif %}
-
-                    {% endfor %}
+                          <mark>{{sentences[1]}}.</mark>
+                          {% else %}
+                                {{sentences[1]}}.
+                          {% endif %}
+                      {% endfor %}
+                  </span>
               </div>
 
               </div>
