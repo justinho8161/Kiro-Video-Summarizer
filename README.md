@@ -53,7 +53,7 @@ With this algorithm, I will be able to gather a list of words which are the most
 ##### 5. I export the video and store my statistics inside SQL and in a Wordcloud to showcase the summarized video in my web application.
 
 
-<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
 
 Here are some pictures on what is happening in the background.
 <img src="static/imgs/download.jpg" alt="Pipeline" width="400" height="400"/>
@@ -75,7 +75,7 @@ Here are some pictures on what is happening in the background.
  <br><br>
  In addition, I will explore image compression to find useful shots for video summaries. Building a neural network to detect this would be incredibly useful. I believe OpenCV is a good way to start my process, since it can detect faces.
 
-<br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 ### Acknowledgements
 I want to thank the number of Open Source tools out there that I was able to use in my capstone process. Natalie Hunt and Sean Reed are excellent instructors as well as my peers. MoviePy, Youtube-Dl, AWS Transcribe, EC2, S3 were huge proponents into getting this project done.
 
