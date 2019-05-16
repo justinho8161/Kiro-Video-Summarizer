@@ -53,7 +53,7 @@ With this algorithm, I will be able to gather a list of words which are the most
 ##### 5. I export the video and store my statistics inside SQL and in a Wordcloud to showcase the summarized video in my web application.
 
 
-<br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
 
 Here are some pictures on what is happening in the background.
 <img src="static/imgs/download.jpg" alt="Pipeline" width="400" height="400"/>
