@@ -56,6 +56,7 @@ With this algorithm, I will be able to gather a list of words which are the most
 <br><br><br><br><br><br><br><br><br><br>
 
 Here are some pictures on what is happening in the background.
+<br>
 <img src="static/imgs/download.jpg" alt="Pipeline" width="400" height="400"/>
 <br>
 
